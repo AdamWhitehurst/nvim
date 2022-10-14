@@ -5,12 +5,10 @@ end
 
 local dashboard = require "alpha.themes.dashboard"
 dashboard.section.header.val = {
-  [[                               __                ]],
-  [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
-  [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-  [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-  [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-  [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+[[\ \        /         |                                   ]],
+[[ \ \  \   /    _ \   |    __|    _ \    __ `__ \     _ \ ]],
+[[  \ \  \ /     __/   |   (      (   |   |   |   |    __/ ]],
+[[   \_/\_/    \___|  _|  \___|  \___/   _|  _|  _|  \___| ]],
 }
 dashboard.section.buttons.val = {
   dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
@@ -22,7 +20,7 @@ dashboard.section.buttons.val = {
   dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 }
 local function footer()
-  return "chrisatmachine.com"
+  return "" -- "https://github.com/LunarVim/nvim-basic-ide/blob/master/lua/user/keymaps.lua"
 end
 
 dashboard.section.footer.val = footer()

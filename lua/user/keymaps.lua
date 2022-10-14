@@ -15,6 +15,8 @@ vim.g.mapleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
+keymap("n", "<leader><leader>", ":b#<CR>", opts)
+
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -31,12 +33,20 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
+keymap("n", "<S-Right>", ":bnext<CR>", opts)
+keymap("n", "<S-Left>", ":bprevious<CR>", opts)
+
+-- Ctrl+z doesn't close
+keymap("n", "<C-z>", "u", opts)
 
 -- Clear highlights
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
 
 -- Close buffers
 keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
+
+-- Close splits
+keymap("n", "C-q", ":q<CR>", opts)
 
 -- Better paste
 keymap("v", "p", '"_dP', opts)
@@ -56,10 +66,14 @@ keymap("v", ">", ">gv", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
 -- Telescope
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
+keymap("n", "<leader>ff", ":Telescope find_files hidden=true<CR>", opts)
+keymap("n", "<leader>fg", ":Telescope git_files hidden=true<CR>", opts)
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap("n", "<leader>fw", ":Telescope bookmarks<CR>", opts)
+keymap("n", "<leader>fm", ":Telescope man_pages<CR>", opts)
+keymap("n", "<leader>fk", ":Telescope keymaps<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
@@ -78,3 +92,19 @@ keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
 keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
 keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
+
+function _G.ReloadConfig()
+	for name, _ in pairs(package.loaded) do
+		if name:match("^cnull") then
+			package.loaded[name] = nil
+		end
+	end
+
+	dofile(vim.env.MYVIMRC)
+end
+keymap("n", "<leader>sv", ":source $MYVIMRC<CR>")
+keymap("n", "<leader>vs", "<Cmd>lua ReloadConfig()<CR>", { noremap = true })
+
+keymap("n", "gr", "<Plug>ReplaceWithRegisterOperator")
+keymap("n", "grr", "<Plug>ReplaceWithRegisterLine")
+keymap("x", "gr", "<Plug>ReplaceWithRegisterVisual")
